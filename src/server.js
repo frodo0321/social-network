@@ -1,5 +1,6 @@
 const moment = require("moment");
 const bluebird = require("bluebird");
+const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -16,19 +17,31 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(function requestLogger(request, response, next) {
+
+const apiRouter = express.Router()
+apiRouter.use(function requestLogger(request, response, next) {
 
     console.log(moment(), request.method, request.path, request.ip);
 
     return next();
 })
+apiRouter.get("/", function(request, response, next) {
+    response.json({api: {users: "get", signup: "post"}})
+})
 
-app.route("/")
-    .get((request, response, next) => {
-        return response.json({test: true});
-    })
+require("./routes")(apiRouter);
 
-require("./routes")(app);
+app.use("/api", apiRouter)
+
+
+app.get("/ping", function(request, response, next) {
+    return response.json({pong: true});
+});
+
+const staticFilePath = path.resolve(path.join(__dirname, "../client/dist"));
+console.log("statis files served at", staticFilePath);
+app.use("/", express.static(staticFilePath))
+
 
 app.use(function errorHandler(error, request, response, next) {
     console.error(error);
