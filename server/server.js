@@ -38,7 +38,7 @@ app.get("/ping", function(request, response, next) {
     return response.json({pong: true});
 });
 
-const staticFilePath = path.resolve(path.join(__dirname, "../client/dist"));
+const staticFilePath = path.resolve(path.join(__dirname, "../dist"));
 console.log("statis files served at", staticFilePath);
 app.use("/", express.static(staticFilePath))
 

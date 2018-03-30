@@ -1,0 +1,21 @@
+{
+  "name": "social-network",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Tyler Haun <frodo03211@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/frodo0321/social-network",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.9",
+    "jquery": "^3.3.1"
+  }
+}
