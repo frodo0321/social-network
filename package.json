@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": ". ./.env && node server/server.js",
+    "start": ". ./.env && node server/",
+    "start:pm2": ". ./.env && pm2 start server/ --name social-network",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

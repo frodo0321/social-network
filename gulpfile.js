@@ -6,9 +6,7 @@ var clean = require("gulp-clean");
 var runSequence = require("run-sequence");
 var wiredep = require("wiredep").stream;
 
-gulp.task("default", function() {
-    return gulp.task("build");
-})
+gulp.task("default", ["build"])
 
 gulp.task("clean", function() {
     return gulp.src("dist/*", {read: false})
@@ -21,20 +19,20 @@ gulp.task("copy-index", function () {
 })
 
 gulp.task("concat-js", function () {
-    return app = gulp.src("client/**/*.js")
+    return app = gulp.src(["client/index.js", "dist/js/app_templates.js", "client/*/**/*.js"])
         .pipe(concat("app.js"))
         .pipe(gulp.dest("dist/js/"))
 })
 
 gulp.task("bower-wiredep", function() {
-    gulp.src("dist/index.html")
+    return gulp.src("dist/index.html")
         .pipe(wiredep({
             ignorePath:  /\.\.\//
         }))
     .pipe(gulp.dest("dist"));
 })
 gulp.task("bower-copy", function() {
-    gulp.src("bower_components/**/*", {base: "."})
+    return gulp.src("bower_components/**/*", {base: "."})
         .pipe(gulp.dest("dist"))
 })
 
@@ -53,13 +51,12 @@ gulp.task("ng-templates", function () {
       transformUrl: function(url) {
         return url.replace('.html', '').replace(/.+\//i, '');
       },
-      templateHeader: 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) { \'use strict\'; '
+      //templateHeader: 'angular.module("app").run(["$templateCache", function($templateCache) { \'use strict\'; '
     }))
     .pipe(gulp.dest("dist/js", {overwrite: true}));
 });
 
 
-gulp.task("build", function (callback) {
-    runSequence(["clean", "copy-index", "bower-wiredep", "bower-copy", "concat-js"], callback);
+gulp.task("build", function() {
+    runSequence("clean", "copy-index", "bower-wiredep", "bower-copy", "ng-templates", "concat-js");
 })
-
