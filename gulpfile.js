@@ -60,3 +60,7 @@ gulp.task("ng-templates", function () {
 gulp.task("build", function() {
     runSequence("clean", "copy-index", "bower-wiredep", "bower-copy", "ng-templates", "concat-js");
 })
+
+gulp.task("watch", ["build"], function() {
+    gulp.watch("client/**/*", ["build"])
+})
