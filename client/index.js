@@ -1,47 +1,95 @@
 
 console.log("TEST");
 
-angular.module("app", ["templates", "ui.router"])
+angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial"])
 
-.run(function ($rootScope) {
+.config(function($httpProvider) {
+    console.log("HTTP PROVIDER", $httpProvider);
+    $httpProvider.defaults.transformRequest.unshift(function transformRequest(data) {
+        console.log("TRANSFORM REQUEST", data);
+        return data;
+    })
+})
 
-    $rootScope.$on('$stateChangeStart',
-        function(event, toState, toParams, fromState, fromParams){
-            console.log("EEEEEE", event);
-            //event.preventDefault();
-            // transitionTo() promise will be rejected with
-            // a 'transition prevented' error
+
+.factory("$api", function apiFactory($http) {
+    var ret = {};
+    var wrappedMethods = ["get", "post", "delete", "put", "patch", "head"];
+    var apiPath = "/api";
+
+    Object.assign(ret, $http);
+
+    wrappedMethods.forEach(method => {
+        ret[method] = function() {
+            console.log(method, "called", arguments);
+
+            var url = arguments[0];
+            url = url.replace(/^\/|\/$/g, '');
+            url = apiPath + "/" + url;
+
+            arguments[0] = url;
+
+            return $http[method].apply(null, arguments)
+        }
+    })
+
+
+    return ret;
+})
+
+.run(function($rootScope, $transitions, $api, $state) {
+    console.log("APIAIPIPII", $api);
+
+    $state.go("/");
+    $transitions.onStart({}, function(transition) {
+        console.log("ON sTART TRANSitioN", transition);
+        var state = transition.to().name;
+        if (state != "auth") {
+            return $api.get("/me")
+                .then(function(data) {
+                    $rootScope.user = data;
+                })
+                .catch(function(error) {
+                    console.log("THERE WAS AN ERROR", error);
+                    if (error.status == 401) {
+                        $state.go("auth");
+                    }
+                    else {
+                        console.error(error);
+                    }
+                });
+        }
     })
 
 })
 
 .config(function uiRouterConfig($urlRouterProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix("");
-    //$urlRouterProvider.otherwise("/")
+    $urlRouterProvider.otherwise("/")
     //$urlRouterProvider.when("/", "news-feed");
     $stateProvider.state("news-feed", {
-            url: "/",
+            url: "",
             templateUrl: "news-feed",
             controller: "newsFeedController"
         }
     )
     $stateProvider.state("auth", {
-            url: "auth",
+            url: "/auth",
             templateUrl: "auth",
             controller: "authController"
         }
     )
+    console.log($urlRouterProvider);
 })
+
 
 
 
 
 .config(function ($provide) {
     $provide.decorator("$rootScope", function($delegate) {
-        //var debugBroadcasts = false;
-        //var debugEmits = false;
-        var debugBroadcasts = true;
-        var debugEmits = true;
+        var debugBroadcasts = false;
+        var debugEmits = false;
         var Scope = $delegate.constructor;
         var origBroadcast = Scope.prototype.$broadcast;
         var origEmit = Scope.prototype.$emit;
@@ -68,3 +116,5 @@ angular.module("app", ["templates", "ui.router"])
         return $delegate
     })
 })
+
+

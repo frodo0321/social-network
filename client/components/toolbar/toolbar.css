@@ -1,0 +1,5 @@
+toolbar md-toolbar {
+    min-height: 48px;
+    height: 48px;
+    z-index: 70 !important;
+}

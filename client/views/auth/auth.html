@@ -1,10 +1,50 @@
-<div>
-    <h2>Auth</h2>
-    <h4>Login</h4>
-    <form>
-        Email: <input type="text"></input>
-        Password: <input type="text"></input>
-        Retype Password: <input type="text"></input>
-        <input type="submit"></input>
-    </form>
+<div class="auth">
+    <div class="container" style="width: 400px;margin: auto;margin-top:100px">
+        <div ng-if="!signup">
+            <form style="    border: solid 1px #ccc;border-radius: 5px;padding: 10px;">
+                <h4>Login</h4>
+                <div layout="column">
+                    <md-input-container>
+                        <label>Email</label>
+                        <input type="text"></input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input type="text"></input>
+                    </md-input-container>
+                    <div layout="row" layout-align="end center">
+                        <md-button class="md-primary md-raised" type="submit">Login</md-button>
+                    </div>
+                </div>
+            </form>
+            <div>
+                Don't have an account? <a href ng-click="showSignup(true)">signup</a>
+            </div>
+        </div>
+        <div ng-if="signup">
+            <form style="    border: solid 1px #ccc;border-radius: 5px;padding: 10px;">
+               <h4>Signup</h4>
+                <div layout="column">
+                    <md-input-container>
+                        <label>Email</label>
+                        <input type="text"></input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input type="text"></input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Retype Password</label>
+                    <input type="text"></input>
+                    </md-input-container>
+                    <div layout="row" layout-align="end center">
+                        <md-button class="md-primary md-raised" type="submit">Signup</md-button>
+                    </div>
+                </div>
+            </form>
+            <div>
+                Already have an account? <a href ng-click="showSignup(false)">login</a>
+            </div>
+        </div>
+    </div>
 </div>
