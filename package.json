@@ -7,7 +7,8 @@
     "start": ". ./.env && node server/",
     "start:pm2": ". ./.env && pm2 start server/ --name social-network",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp build"
+    "build": "gulp build",
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
