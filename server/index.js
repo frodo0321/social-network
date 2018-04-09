@@ -17,11 +17,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+require("./middleware/auth")(app);
+
 
 const apiRouter = express.Router()
 apiRouter.use(function requestLogger(request, response, next) {
 
-    console.log(moment(), request.method, request.path, request.ip);
+    var email = "Unauthenticated";
+    if (request.user) {
+        email = request.user.email;
+    }
+    console.log(moment(), email, request.method, request.path, request.ip);
 
     return next();
 })
@@ -39,7 +45,7 @@ app.get("/ping", function(request, response, next) {
 });
 
 const staticFilePath = path.resolve(path.join(__dirname, "../dist"));
-console.log("statis files served at", staticFilePath);
+console.log("static files served at", staticFilePath);
 app.use("/", express.static(staticFilePath))
 
 
@@ -52,6 +58,10 @@ app.use(function errorHandler(error, request, response, next) {
 
 app.listen(8000, () => {console.log("App listening on 8000");})
 
-process.on("uncaughtException", console.error);
+process.on("uncaughtException", error => {
+    console.error(error);
+    process.exit(1); // not optional
+}
+);
 
 module.exports = app;
