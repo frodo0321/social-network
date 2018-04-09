@@ -1,7 +1,7 @@
 
 console.log("TEST");
 
-angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial"])
+angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial", "ngMessages"])
 
 .config(function($httpProvider) {
     console.log("HTTP PROVIDER", $httpProvider);
