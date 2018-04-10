@@ -1,0 +1,12 @@
+<div style="width: 550px;min-height: 100px;border: solid 1px #ccc;border-radius: 5px;padding:5px">
+    <div layout="column">
+        <div layout="row">
+            <img style="height:50px" ng-src="{{$ctrl.data.user.profilePicture}}"></img>
+            <div layout="column">
+                <span>{{$ctrl.data.user.name}}</span>
+                <span>{{$ctrl.data.createdAt}}</span>
+            </div>
+        </div>
+        <div>{{$ctrl.data.text}}</div>
+    </div>
+</div>

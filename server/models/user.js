@@ -10,6 +10,12 @@ const User = new mongoose.Schema({
         type: String,
         required: true,
         select: false
+    },
+    name: {
+        type: String
+    },
+    profilePicture: {
+        type: String
     }
 }, {
     timestamps: true,
