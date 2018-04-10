@@ -40,7 +40,7 @@ angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial"
 .run(function($rootScope, $transitions, $api, $state) {
     console.log("APIAIPIPII", $api);
 
-    $state.go("/");
+    $state.go("news-feed");
     $transitions.onStart({}, function(transition) {
         console.log("ON sTART TRANSitioN", transition);
         var state = transition.to().name;

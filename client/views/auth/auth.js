@@ -1,5 +1,5 @@
 angular.module("app")
-.controller("authController", function($scope, $api, $mdToast) {
+.controller("authController", function($scope, $api, $mdToast, $state) {
     console.log("AUTH CONTROLLER", $scope)
 
     $scope.signup=false;
@@ -14,18 +14,26 @@ angular.module("app")
         return $api.post(endpoint, data)
             .then(function(response) {
                 console.log("LOGIN", response.data);
+                if (response.data.success) {
+                    return response.data;
+                }
             })
             .catch(function(response) {
                 var error = response.data.errors[0];
                 console.log("EROROROROROR", error);
-                return $mdToast.showSimple(error);
+                $mdToast.showSimple(error);
+                throw response;
             })
-        
     }
 
     loginData = {};
     loginData.onSubmit = function loginOnSubmit() {
-        submit("/login", {email: loginData.email, password: loginData.password});
+        submit("/login", {email: loginData.email, password: loginData.password})
+            .then(data => {
+                if (data.success) {
+                    return $state.go("news-feed");
+                }
+            })
     }
     $scope.loginData = loginData;
 
