@@ -31,9 +31,9 @@ apiRouter.use(function requestLogger(request, response, next) {
 
     return next();
 })
-apiRouter.get("/", function(request, response, next) {
-    response.json({api: {users: "get", signup: "post"}})
-})
+//apiRouter.get("/", function(request, response, next) {
+//    response.json({api: {users: "get", signup: "post"}})
+//})
 
 require("./routes")(apiRouter);
 
