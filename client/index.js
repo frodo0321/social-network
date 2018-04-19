@@ -63,6 +63,11 @@ angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial"
 
 })
 
+
+.config(function uiRouterConfig($mdIconProvider) {
+    $mdIconProvider.defaultFontSet("fa");
+})
+
 .config(function uiRouterConfig($urlRouterProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix("");
     $urlRouterProvider.otherwise("/")

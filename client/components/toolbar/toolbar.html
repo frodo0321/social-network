@@ -1,8 +1,40 @@
 <div>
     <md-toolbar class="md-primary" style="height: 48px">
-        <span>
-            <img style="height: 100%" src="http://icons.iconarchive.com/icons/hydrattz/multipurpose-alphabet/256/Letter-S-blue-icon.png"></img>
-        </span>
+        <div class="md-toolbar-tools">
+            <md-button ui-sref="news-feed" class="md-icon-button" aria-label="Home" style="padding: 0px;border-radius: 0px;">
+                <img style="height: 100%" src="http://icons.iconarchive.com/icons/hydrattz/multipurpose-alphabet/256/Letter-S-blue-icon.png"></img>
+            </md-button>
+            <div flex></div>
 
+            <md-button class="md-icon-button" aria-label="Favorite">
+                <md-icon class="fa-lg" md-font-icon="fa-users"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Favorite">
+                <md-icon class="fa-lg" md-font-icon="fa-bell"></md-icon>
+            </md-button>
+
+            <md-menu>
+                <md-button aria-label="Open settings menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
+                    <md-icon class="fa-lg" md-font-icon="fa-bars"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ui-sref="profile">
+                            <md-icon md-font-icon="fa-user" md-menu-align-target></md-icon>
+                            Profile
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="logout()">
+                            <md-icon md-font-icon="fa-sign-out-alt" md-menu-align-target></md-icon>
+                            Logout
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+            <div style="width: 20px"></div>
+        </div>
     </md-toolbar>
 </div>
