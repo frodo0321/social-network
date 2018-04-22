@@ -7,14 +7,33 @@
             <div flex></div>
 
             <span ng-show="showMenus != false">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                    <md-icon class="fa-lg" md-font-icon="fa-users"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Favorite">
-                    <md-icon class="fa-lg" md-font-icon="fa-bell"></md-icon>
-                </md-button>
+                <a ui-sref="find-friends">Find Friends</a>
 
                 <md-menu>
+                    <md-button class="md-icon-button" aria-label="Favorite"  ng-click="openMenu($mdMenu, $event)">
+                        <md-icon class="fa-lg" md-font-icon="fa-users"></md-icon>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item ng-repeat="friendRequest in friendRequests">
+                            <md-button ui-sref="profile">
+                                {{ friendRequest.from.profilePicture }}
+                                {{ friendRequest.from.email }}
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu ng-hide="true">
+                    <md-button class="md-icon-button" aria-label="Favorite"  ng-click="openMenu($mdMenu, $event)">
+                        <md-icon class="fa-lg" md-font-icon="fa-bell"></md-icon>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item ng-repeat="friendRequest in friendRequests">
+                            <div>No new notifications</div>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+
+                <md-menu class="settings-menu">
                     <md-button aria-label="Open settings menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
                         <md-icon class="fa-lg" md-font-icon="fa-bars"></md-icon>
                     </md-button>

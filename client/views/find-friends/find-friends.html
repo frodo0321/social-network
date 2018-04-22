@@ -1,0 +1,8 @@
+<h2>Find Friends</h2>
+
+<div ng-repeat="user in users" style="margin-top: 10px; border: solid 1px #ccc">
+    <div>{{user.profilePicture}}</div>
+    <div>{{user.email}}</div>
+    <div>{{user.name}}</div>
+    <md-button ng-click="addFriend(user)">Add Friend</md-button>
+</div>

@@ -1,7 +1,7 @@
 angular.module("app")
 .component("toolbar", {
     templateUrl: "toolbar",
-    controller: function toolbarController($scope, $api, $state, $transitions) {
+    controller: function toolbarController($rootScope, $scope, $api, $state, $transitions) {
         console.log("TOOLBAR CONTROLLER", $scope);
 
         $transitions.onSuccess({}, function(transition) {
@@ -13,6 +13,7 @@ angular.module("app")
                 if ($scope.showMenus != true) {
                     $scope.showMenus = true;
                 }
+                fetchFriendRequests();
             }
         });
 
@@ -31,7 +32,20 @@ angular.module("app")
                 })
         }
 
+        function fetchFriendRequests() {
+            console.log("ROOT SCOPE", $rootScope);
+            var user = $rootScope.user;
+            if (user) {
+                $api.get("friend-requests?to=" + user._id)
+                    .then(function(response) {
+                        $scope.friendRequests = response.data.friendRequests;
+                    })
+                    .catch(function(response) {
+                        console.error("ERROR", response);
+                    })
+            }
+        
+        }
 
     }
 })
-

@@ -46,8 +46,8 @@ angular.module("app", ["templates", "ui.router", "ui.router.state", "ngMaterial"
         var state = transition.to().name;
         if (state != "auth") {
             return $api.get("/me")
-                .then(function(data) {
-                    $rootScope.user = data;
+                .then(function(response) {
+                    $rootScope.user = response.data.user;
                 })
                 .catch(function(error) {
                     console.log("THERE WAS AN ERROR", error);
