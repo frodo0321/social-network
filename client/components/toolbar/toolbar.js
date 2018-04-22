@@ -12,7 +12,7 @@ angular.module("app")
         $scope.logout = function logout() {
             return $api.post("logout")
                 .then(function(response) {
-                    return $state.go("login");
+                    return $state.go("auth");
                 })
                 .catch(function(response) {
                     console.error("error", response);
