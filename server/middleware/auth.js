@@ -1,4 +1,5 @@
 const session = require("express-session");
+const RedisStore = require('connect-redis')(session);
 const passport = require("passport");
 
 const mongoose = require("mongoose");
@@ -22,7 +23,16 @@ passport.deserializeUser(function(userId, done) {
 module.exports = function(app) {
 
     app.set('trust proxy', 1)
+
+
+    //const redisOptions = {
+    //    host: "",
+    //    port: ""
+    //};
+    const redisOptions = {};
+
     const sessionConfig =   {
+        store: new RedisStore(redisOptions),
         secret: 'keyboard cat',
         resave: false,
         saveUninitialized: true
